@@ -1,0 +1,28 @@
+{
+  "name": "signatures-101",
+  "version": "1.0.0",
+  "description": "Welcome! This is an automated workshop that will guide you into learning out to use Ethereum signatures in smart contracts, and in meta transactions.\r It is aimed at developpers that are familiar with Solidity.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuiRch/signatures-101.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuiRch/signatures-101/issues"
+  },
+  "homepage": "https://github.com/GuiRch/signatures-101#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.4.1",
+    "@supercharge/strings": "^1.24.0",
+    "@truffle/hdwallet-provider": "^2.0.0",
+    "truffle": "^5.4.25"
+  }
+}
