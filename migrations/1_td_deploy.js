@@ -1,5 +1,4 @@
 var points = artifacts.require("ERC20TD.sol");
-var ERC20 = artifacts.require("DummyToken.sol"); 
 var evaluator = artifacts.require("Evaluator.sol");
 var nft_td9 = artifacts.require("NFT_td9.sol");
 var exerciceSolution = artifacts.require("ExerciceSolution.sol");
@@ -17,25 +16,23 @@ async function hardcodeContractAddress(deployer, network, accounts) {
 }
 
 async function deploySolution(deployer, network, accounts) {
-    console.log("Points before : " + myPoints.toString())
 	var myPoints = await TDToken.balanceOf(accounts[0])
+    console.log("Points before : " + myPoints.toString())
 
     Nft_td9 = await nft_td9.new()
+    console.log('Nft_td9 address : ' + Nft_td9.address)
     ExerciceSolution = await exerciceSolution.new(Nft_td9.address)
+    console.log('ExerciceSolution address : ' + ExerciceSolution.address)
     
+    await Evaluator.submitExercice(ExerciceSolution.address)
     await Evaluator.ex1_testERC721()
-	// const ticker = await Evaluator.readTicker(accounts[0])
-    // console.log("Ticker : " + ticker)
-	// const supply = await Evaluator.readSupply(accounts[0])
-    // console.log("Supply : " + supply.toString())
     
-    // ERC20Basics = await erc20Basics.new(ticker, ticker, supply.toString())
-    // console.log("Points at that step : " + myPoints.toString())
-    // console.log("ERC20 Basics contract address : " + ERC20Basics.address)
+    const stringToSignToGetPoint = '0x00000000596f75206e65656420746f207369676e207468697320737472696e67'
+    const signature = await web3.eth.sign(stringToSignToGetPoint, accounts[0])
+    console.log('Signature : ' + signature)
+    await Evaluator.ex2_generateASignature(signature)
     
-    // await Evaluator.submitErc20(ERC20Basics.address)
-    // console.log("Points after submitErc20 : " + myPoints.toString())
-    // await Evaluator.ex6b_testErc20TickerAndSupply()
+    await Evaluator.ex3_extractAddressFromSignature()
 
     var myPoints = await TDToken.balanceOf(accounts[0])
 	console.log("Points after : " + myPoints.toString())
