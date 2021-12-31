@@ -492,7 +492,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-31T17:26:18.820Z",
+  "updatedAt": "2021-12-31T22:37:39.762Z",
   "devdoc": {
     "details": "Interface for any contract that wants to support safeTransfers from ERC721 asset contracts.",
     "methods": {

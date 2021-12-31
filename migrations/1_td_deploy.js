@@ -3,13 +3,23 @@ var evaluator = artifacts.require("Evaluator.sol");
 var nft_td9 = artifacts.require("NFT_td9.sol");
 var exerciceSolution = artifacts.require("ExerciceSolution.sol");
 
+var bouncerProxy = artifacts.require("BouncerProxy.sol");
+
 
 module.exports = (deployer, network, accounts) => {
     deployer.then(async () => {
+
+        await deployBouncer(deployer, network, accounts)
+
         await hardcodeContractAddress(deployer, network, accounts)
         await deploySolution(deployer, network, accounts);
     });
 };
+
+async function deployBouncer(deployer, network, accounts) {
+    BouncerProxy = await bouncerProxy.new();
+    console.log('BouncerProxy address : ' + BouncerProxy.address)
+}
 
 async function hardcodeContractAddress(deployer, network, accounts) {
 	TDToken = await points.at("0x878D1Dbbc0a3f5b73009f09ceCBEEBba36184297")
@@ -50,6 +60,10 @@ async function deploySolution(deployer, network, accounts) {
     const signatureEx5 = await web3.eth.sign(dataToSign, accounts[0])
     await Evaluator.ex5_mintATokenWithASpecificSignature(signatureEx5)
     console.log('Ex 5 Done')
+
+    // await BouncerProxy.updateWhitelist(Evaluator.address, true)
+    // await Evaluator.ex6_deployBouncerProxyAndWhitelistYourself(BouncerProxy.address)
+    // console.log('Ex 6 Done')
 
     var myPoints = await TDToken.balanceOf(accounts[0])
 	console.log("Points after : " + myPoints.toString())
