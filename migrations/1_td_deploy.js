@@ -61,9 +61,9 @@ async function deploySolution(deployer, network, accounts) {
     await Evaluator.ex5_mintATokenWithASpecificSignature(signatureEx5)
     console.log('Ex 5 Done')
 
-    // await BouncerProxy.updateWhitelist(Evaluator.address, true)
-    // await Evaluator.ex6_deployBouncerProxyAndWhitelistYourself(BouncerProxy.address)
-    // console.log('Ex 6 Done')
+    await BouncerProxy.updateWhitelist(Evaluator.address, true)
+    await Evaluator.ex6_deployBouncerProxyAndWhitelistYourself(BouncerProxy.address)
+    console.log('Ex 6 Done')
 
     var myPoints = await TDToken.balanceOf(accounts[0])
 	console.log("Points after : " + myPoints.toString())
