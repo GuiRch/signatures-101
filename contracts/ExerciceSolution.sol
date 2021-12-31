@@ -4,10 +4,12 @@ import "./IExerciceSolution.sol";
 import "./NFT_td9.sol";
 
 contract ExerciceSolution {
+    mapping(address => bool) public whitelisted;
     NFT_td9 nft;
 
     constructor(NFT_td9 _nft) public {
         nft = _nft;
+        whitelisted[msg.sender] = true;
 	}
 
 	function ERC721Address() public returns(address) {
@@ -17,6 +19,14 @@ contract ExerciceSolution {
 	function mintATokenForMe() public returns(uint256) {
         uint256 newItemId = nft.awardItem(msg.sender);
         return newItemId;
+    }
+
+    function whitelist(address _signer) public returns (bool) {
+        return whitelisted[_signer];
+    }
+
+    function signerIsWhitelisted(bytes32 _hash, bytes memory _signature) public returns (bool) {
+        return whitelisted[getAddressFromSignature(_hash, _signature)];
     }
 
     function getAddressFromSignature(bytes32 _hash, bytes memory _signature) public returns (address) {

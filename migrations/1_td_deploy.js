@@ -26,13 +26,22 @@ async function deploySolution(deployer, network, accounts) {
     
     await Evaluator.submitExercice(ExerciceSolution.address)
     await Evaluator.ex1_testERC721()
+    console.log('Ex 1 Done')
     
     const stringToSignToGetPoint = '0x00000000596f75206e65656420746f207369676e207468697320737472696e67'
     const signature = await web3.eth.sign(stringToSignToGetPoint, accounts[0])
     console.log('Signature : ' + signature)
     await Evaluator.ex2_generateASignature(signature)
+    console.log('Ex 2 Done')
     
     await Evaluator.ex3_extractAddressFromSignature()
+    console.log('Ex 3 Done')
+
+    const aBytes32 = '0x00000000596f75206e65656420746f207369676e207468697320737472696e67'
+    const signatureEx4 = await web3.eth.sign(aBytes32, accounts[0])
+    console.log('Signature : ' + signatureEx4)
+    await Evaluator.ex4_manageWhiteListWithSignature(aBytes32, signatureEx4)
+    console.log('Ex 4 Done')
 
     var myPoints = await TDToken.balanceOf(accounts[0])
 	console.log("Points after : " + myPoints.toString())
