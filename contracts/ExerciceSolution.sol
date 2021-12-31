@@ -29,6 +29,12 @@ contract ExerciceSolution {
         return whitelisted[getAddressFromSignature(_hash, _signature)];
     }
 
+    function mintATokenForMeWithASignature(bytes memory _signature) public returns (uint256) {
+        bytes32 expectedSignedData = keccak256(abi.encodePacked(msg.sender, tx.origin, address(nft)));
+        require(signerIsWhitelisted(expectedSignedData, _signature), "signature is not provided by an authorized minter");
+        return mintATokenForMe();
+    }
+
     function getAddressFromSignature(bytes32 _hash, bytes memory _signature) public returns (address) {
         bytes32 r;
         bytes32 s;

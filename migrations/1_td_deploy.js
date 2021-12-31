@@ -3,6 +3,7 @@ var evaluator = artifacts.require("Evaluator.sol");
 var nft_td9 = artifacts.require("NFT_td9.sol");
 var exerciceSolution = artifacts.require("ExerciceSolution.sol");
 
+
 module.exports = (deployer, network, accounts) => {
     deployer.then(async () => {
         await hardcodeContractAddress(deployer, network, accounts)
@@ -42,6 +43,13 @@ async function deploySolution(deployer, network, accounts) {
     console.log('Signature : ' + signatureEx4)
     await Evaluator.ex4_manageWhiteListWithSignature(aBytes32, signatureEx4)
     console.log('Ex 4 Done')
+
+    const dataToSign = web3.utils.soliditySha3(Evaluator.address, accounts[0], Nft_td9.address);
+    // const preDataToSign = web3.eth.abi.encodeParameters(['address', 'address', 'address'], [Evaluator.address, accounts[0], Nft_td9.address]);
+    // const dataToSign = web3.utils.keccak256(preDataToSign)
+    const signatureEx5 = await web3.eth.sign(dataToSign, accounts[0])
+    await Evaluator.ex5_mintATokenWithASpecificSignature(signatureEx5)
+    console.log('Ex 5 Done')
 
     var myPoints = await TDToken.balanceOf(accounts[0])
 	console.log("Points after : " + myPoints.toString())
