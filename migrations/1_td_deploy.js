@@ -3,13 +3,13 @@ var evaluator = artifacts.require("Evaluator.sol");
 var nft_td9 = artifacts.require("NFT_td9.sol");
 var exerciceSolution = artifacts.require("ExerciceSolution.sol");
 
-var bouncerProxy = artifacts.require("BouncerProxy.sol");
+var bouncerProxy = artifacts.require("BouncerProxy");
 
 
 module.exports = (deployer, network, accounts) => {
     deployer.then(async () => {
 
-        // await deployBouncer(deployer, network, accounts)
+        await deployBouncer(deployer, network, accounts)
 
         await hardcodeContractAddress(deployer, network, accounts)
         await deploySolution(deployer, network, accounts);
@@ -62,8 +62,8 @@ async function deploySolution(deployer, network, accounts) {
     console.log('Ex 5 Done')
 
     // await BouncerProxy.updateWhitelist(Evaluator.address, true)
-    // await Evaluator.ex6_deployBouncerProxyAndWhitelistYourself(BouncerProxy.address)
-    // console.log('Ex 6 Done')
+    await Evaluator.ex6_deployBouncerProxyAndWhitelistYourself(BouncerProxy.address)
+    console.log('Ex 6 Done')
 
     var myPoints = await TDToken.balanceOf(accounts[0])
 	console.log("Points after : " + myPoints.toString())
